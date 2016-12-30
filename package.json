@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mdvb1001/Flashcard-Generator/issues"
   },
-  "homepage": "https://github.com/mdvb1001/Flashcard-Generator#readme"
+  "homepage": "https://github.com/mdvb1001/Flashcard-Generator#readme",
+  "dependencies": {
+    "inquirer": "^2.0.0"
+  }
 }
