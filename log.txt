@@ -1,3 +1,6 @@
-What was the color of Napoleon's hat?,Blue
-Chris' last name?,Brenner
-Hard Hat?,Black Bear
+Why are flamingos pink?,they eat shrimp
+Is this Cloze thing actually working?,Yes
+... is my name?,Max
+Eli ... is the QB for the NY Giants,Manning
+... won an oscar for best male actor in 1954.,Marlon Brando
+... was the first Prez!,George Washington
