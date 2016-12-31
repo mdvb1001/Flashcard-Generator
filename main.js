@@ -1,14 +1,7 @@
-/* 
-Psuedo Code:
-
-PHASE 1 -- BasicFlashcard 
-
-- Constructor function that has two params, so that user can add any Flashcard at will
-	FRONT and BACK.  
-*/
 var BasicFlashcard = require("./basic-card.js");
 var ClozeFlashcard = require("./cloze-card.js");
 var inquirer = require('inquirer');
+var identifier = "...";
 var fs = require("fs");
 inquirer.prompt([{
     type: "list",
@@ -33,20 +26,21 @@ inquirer.prompt([{
                 inquirer.prompt([{
                     type: "input",
                     message: "What is the text? (please use '...' where the cloze should go)",
+                    validate: function (input) {
+                        if (input.indexOf(identifier) === -1) {
+                            console.log("\n" + " *** ERROR: YOU MUST INCLUDE '...' IN TEXT");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    },
                     name: "text"
                 }, {
                     type: "input",
                     message: "What is the cloze?",
                     name: "cloze"
                 }]).then(function (flashcard) {
-                	var identifier = "...";
-                    var clozeText = flashcard.text;
-                    var clozeAnswer = flashcard.cloze;
-                    if (clozeText.includes(identifier) !== -1) {
-                        console.log("Error: please insert '...' where the cloze section should be");
-                    } else {
-                        ClozeFlashcard(clozeText, clozeAnswer);
-                    }
+                    ClozeFlashcard(flashcard.text, flashcard.cloze);
                 });
             } else if (flashcard.cardType === "Basic") {
                 inquirer.prompt([{
@@ -75,19 +69,6 @@ function readCards(array, index) {
         if (answer.question === thisTrivia[1]) {
             console.log("Good Work!");
             readCards(array, index + 1);
-            // inquirer.prompt([{
-            //     type: "confirm",
-            //     message: "would you like to see the answer?",
-            //     name: "fullAnswer",
-            //     default: true
-            // }]).then(function (see) {
-            //     if (see.fullAnswer === true) {
-            //         console.log(thisTrivia[0] + " " + thisTrivia[1]);
-            //         readCards(array, index + 1);
-            //     } else {
-            //         readCards(array, index + 1);
-            //     }
-            // });
         } else {
             console.log("This is incorrect!");
             inquirer.prompt([{
@@ -104,15 +85,5 @@ function readCards(array, index) {
                 }
             });
         }
-    });
-}
-
-function seeAnswer(array, index) {
-    inquirer.prompt([{
-        type: "confirm",
-        message: "would you like to see the answer?",
-        name: "fullAnswer"
-    }]).then(function () {
-        console.log(thisTrivia[0] + " " + thisTrivia[1]);
     });
 }
