@@ -37,11 +37,11 @@ There are two commands:
 
 2) READ
 
-	This allows you to a) read all of the cards you have created (basic & cloze-deleted) and to b) provide the answer.
+	This allows you to a) read all of the cards you have created (basic & cloze-deleted) and b) provide 
+	the answer.
 	
 	If you are correct, you will be presented with a “Good Work!” message. 
 	If you are incorrect, you will have the option to view the correct answer. Simply press 'Enter'. 
-	You may also skip this step by pressing 'n' followed by the 'Enter' key. 
+	Conversely, you may skip this step by pressing 'n' followed by the 'Enter' key. 
 
-Hope you enjoy! 
 
