@@ -1,9 +1,8 @@
 Why are flamingos pink?,they eat shrimp
 Is this Cloze thing actually working?,Yes
-... is my name?,Max
 Eli ... is the QB for the NY Giants,Manning
 ... won an oscar for best male actor in 1954.,Marlon Brando
 ... was the first Prez!,George Washington
 who is the main actor in Freaky Friday (2003)?,Lindsay Lohan
-What is going on here? ,Nothing
 Who is Bill Clinton's wife?,Hilary Clinton
+My TA's name is ...,Michael

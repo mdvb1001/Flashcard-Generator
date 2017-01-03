@@ -13,14 +13,27 @@ There are two commands:
 	
 	  You will be prompted to enter a question, followed by the answer.
 
+	  Example:
+
+	  Why are flamingos pink?
+	  They eat shrimp
+
 
 	- Cloze-Deleted Flashcards: 
 		
 	  You will be prompted to enter the text portion of the flashcard. At this 
- 	  stage, be sure to include three dots (“. . .”) to indicate where the deleted portion of the text 
+ 	  stage, be sure to include three dots (“...”) to indicate where the deleted portion of the text 
 	  should go in the text. An error message will display if you do not include the three dots in your text. 
 
 	  Then, you will be prompted to enter the deleted-portion (or missing piece) of the text.
+
+	  Example: 
+
+	  Eli ... is the QB for the NY Giants.
+	  Manning
+
+	  In 1972, ... won his second academy award for best male actor.
+	  Marlon Brando
 
 2) READ
 
