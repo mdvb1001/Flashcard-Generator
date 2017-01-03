@@ -38,7 +38,7 @@ There are two commands:
 2) READ
 
 	This allows you to a) read all of the cards you have created (basic & cloze-deleted) and b) provide 
-	the answer.
+	the answers to each flashcard.
 	
 	If you are correct, you will be presented with a “Good Work!” message. 
 	If you are incorrect, you will have the option to view the correct answer. Simply press 'Enter'. 
