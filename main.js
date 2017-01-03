@@ -6,23 +6,29 @@ var fs = require("fs");
 inquirer.prompt([{
     type: "list",
     message: "What would you like to do?",
-    choices: ["Read card", "Create card"],
+    choices: ["Create card", "Read card"],
     name: "searchType"
 }]).then(function (flashcard) {
-    if (flashcard.searchType === "Read card") {
-        fs.readFile("log.txt", "utf8", function (error, data) {
-            var dataLine = data.split("\n");
-            var count = 0;
-            readCards(dataLine, count);
-        });
-    } else if (flashcard.searchType === "Create card") {
+    if (flashcard.searchType === "Create card") {
         inquirer.prompt([{
             type: "list",
             message: "What type of Card whould you like to Create?",
-            choices: ["Cloze", "Basic"],
+            choices: ["Basic", "Cloze"],
             name: "cardType"
         }]).then(function (flashcard) {
-            if (flashcard.cardType === "Cloze") {
+            if (flashcard.cardType === "Basic") {
+                inquirer.prompt([{
+                    type: "input",
+                    message: "What is the question?",
+                    name: "front"
+                }, {
+                    type: "input",
+                    message: "What is the answer?",
+                    name: "back"
+                }]).then(function (flashcard) {
+                    BasicFlashcard(flashcard.front, flashcard.back);
+                });
+            } else if (flashcard.cardType === "Cloze") {
                 inquirer.prompt([{
                     type: "input",
                     message: "What is the text? (please use '...' where the cloze should go)",
@@ -42,21 +48,15 @@ inquirer.prompt([{
                 }]).then(function (flashcard) {
                     ClozeFlashcard(flashcard.text, flashcard.cloze);
                 });
-            } else if (flashcard.cardType === "Basic") {
-                inquirer.prompt([{
-                    type: "input",
-                    message: "What is the question?",
-                    name: "front"
-                }, {
-                    type: "input",
-                    message: "What is the answer?",
-                    name: "back"
-                }]).then(function (flashcard) {
-                    BasicFlashcard(flashcard.front, flashcard.back);
-                });
-            }
+            } 
         });
-    }
+    } else if (flashcard.searchType === "Read card") {
+        fs.readFile("log.txt", "utf8", function (error, data) {
+            var dataLine = data.split("\n");
+            var count = 0;
+            readCards(dataLine, count);
+        });
+    } 
 });
 
 function readCards(array, index) {
