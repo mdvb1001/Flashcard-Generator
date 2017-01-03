@@ -11,7 +11,7 @@ There are two commands:
 
 	- Basic Flashcard: 
 	
-	  You will be prompted to enter a question, followed by the answer.
+	  You will be prompted to enter a question, followed by an answer.
 
 	  Example:
 
@@ -23,7 +23,7 @@ There are two commands:
 		
 	  You will be prompted to enter the text portion of the flashcard. At this 
  	  stage, be sure to include three dots (“...”) to indicate where the deleted portion of the text 
-	  should go in the text. An error message will display if you do not include the three dots in your text. 
+	  should be in the text. An error message will be displayed if you do not include the "..." in your text. 
 
 	  Then, you will be prompted to enter the deleted-portion (or missing piece) of the text.
 
@@ -37,10 +37,11 @@ There are two commands:
 
 2) READ
 
-	This allows you to read all of the cards you have created (basic & cloze-delted) and to provide the answer.
+	This allows you to a) read all of the cards you have created (basic & cloze-deleted) and to b) provide the answer.
+	
 	If you are correct, you will be presented with a “Good Work!” message. 
-	If you are incorrect, you will have the option to view the correct answer. Simply press Enter. 
-	You may also skip this step by pressing “n” followed by the Enter key. 
+	If you are incorrect, you will have the option to view the correct answer. Simply press 'Enter'. 
+	You may also skip this step by pressing 'n' followed by the 'Enter' key. 
 
 Hope you enjoy! 
 
