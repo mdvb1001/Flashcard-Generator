@@ -7,7 +7,7 @@ var BasicFlashcard = require("./basic-card.js");
 // Fetch function in basic-card.js
 var ClozeFlashcard = require("./cloze-card.js");
 // Defines where the deleted portion of text should be in text of cloze-delelted flashcards
-var identifier = "...";
+var identifier = "---";
 // Creates a "Prompt" with a series of commands: Create of Read
 inquirer.prompt([{
     type: "list",
@@ -46,11 +46,11 @@ inquirer.prompt([{
                 inquirer.prompt([{
                     // User inputs the text with "..."
                     type: "input",
-                    message: "What is the partial text? (type '...' to indicate deleted portion)",
+                    message: "What is the partial text? (type '---' to indicate deleted portion)",
                     // If user forget to add "..." then an error message is prompted
                     validate: function (input) {
                         if (input.indexOf(identifier) === -1) {
-                            console.log("\n" + " *** ERROR: YOU MUST INCLUDE '...' IN TEXT");
+                            console.log("\n" + " *** ERROR: YOU MUST INCLUDE '---' IN TEXT");
                             return false;
                         } else {
                             return true;

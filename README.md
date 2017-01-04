@@ -26,8 +26,8 @@ There are two commands:
 	- Cloze-Deleted Flashcards: 
 		
 	  You will be prompted to enter the text portion of the flashcard. At this 
- 	  stage, be sure to include three dots (“...”) to indicate where the deleted portion of the text 
-	  should be in the text. An error message will be displayed if you do not include the "..." in your text. 
+ 	  stage, be sure to include three dashes (“---”) to indicate where the deleted portion of the text 
+	  should be in the text. An error message will be displayed if you do not include the "---" in your text. 
 
 	  Then, you will be prompted to enter the deleted-portion (or missing piece) of the text.
 
