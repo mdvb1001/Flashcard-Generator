@@ -2,6 +2,10 @@
 
 Flashcard-Generator is designed to be the simplest way to create and read flashcards in your terminal. 
 
+Run the app by typing the following in your terminal:  
+
+	node main.js
+
 There are two commands: 
 
 1) CREATE 
