@@ -9,74 +9,111 @@ var ClozeFlashcard = require("./cloze-card.js");
 // Defines where the deleted portion of text should be in text of cloze-delelted flashcards
 var identifier = "---";
 // Creates a "Prompt" with a series of commands: Create of Read
-inquirer.prompt([{
-    type: "list",
-    message: "What would you like to do?",
-    choices: ["Create card", "Read card"],
-    name: "searchType"
-        // Once a command is chosen, then... 
-}]).then(function (flashcard) {
-    if (flashcard.searchType === "Create card") {
-        // If user selects Create command, then two other commands are prompted
-        inquirer.prompt([{
-            type: "list",
-            message: "What type of Card whould you like to Create?",
-            choices: ["Basic", "Cloze"],
-            name: "cardType"
-                // Once a this second command is chosen, then...
-        }]).then(function (flashcard) {
-            // If user selects Basic then a basic cards is created in this two-step process
-            if (flashcard.cardType === "Basic") {
-                // User inputs the question    	
-                inquirer.prompt([{
-                    type: "input",
-                    message: "What is the question?",
-                    name: "front"
-                }, {
-                    // User inputs the answer
-                    type: "input",
-                    message: "What is the answer?",
-                    name: "back"
-                }]).then(function (flashcard) {
-                    // ... then constructor function in basic-card.js appends data to log.txt
-                    BasicFlashcard(flashcard.front, flashcard.back);
-                });
-                // If user selects Cloze then a cloze cards is created in this two-step process
-            } else if (flashcard.cardType === "Cloze") {
-                inquirer.prompt([{
-                    // User inputs the text with "..."
-                    type: "input",
-                    message: "What is the partial text? (type '---' to indicate deleted portion)",
-                    // If user forget to add "..." then an error message is prompted
-                    validate: function (input) {
-                        if (input.indexOf(identifier) === -1) {
-                            console.log("\n" + " *** ERROR: YOU MUST INCLUDE '---' IN TEXT");
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    },
-                    name: "text"
-                }, {
-                    // If user fills out first step appropriately, then user is ashed to input answer (missing bit)
-                    type: "input",
-                    message: "What is the deleted portion?",
-                    name: "cloze"
-                }]).then(function (flashcard) {
-                    // ... then constructor function in cloze-card.js appends data to log.txt
-                    ClozeFlashcard(flashcard.text, flashcard.cloze);
-                });
-            }
-        });
-        // If user selects Read, then each card is displayed one at a time
-    } else if (flashcard.searchType === "Read card") {
-        fs.readFile("log.txt", "utf8", function (error, data) {
-            var dataLine = data.split("\n");
-            var count = 0;
-            readCards(dataLine, count);
-        });
-    }
-});
+startPrompt();
+
+function startPrompt() {
+    inquirer.prompt([{
+        type: "list",
+        message: "What would you like to do?",
+        choices: ["Create card", "Read card"],
+        name: "searchType"
+            // Once a command is chosen, then... 
+    }]).then(function (flashcard) {
+        if (flashcard.searchType === "Create card") {
+            // If user selects Create command, then two other commands are prompted
+            createCard();
+        } else if (flashcard.searchType === "Read card") {
+            fs.readFile("log.txt", "utf8", function (error, data) {
+                var dataLine = data.split("\n");
+                var count = 0;
+                readCards(dataLine, count);
+            });
+        }
+    });
+}
+
+function createCard() {
+    inquirer.prompt([{
+        type: "list",
+        message: "What type of Card whould you like to Create?",
+        choices: ["Basic", "Cloze"],
+        name: "cardType"
+            // Once a this second command is chosen, then...
+    }]).then(function (flashcard) {
+        // If user selects Basic then a basic cards is created in this two-step process
+        if (flashcard.cardType === "Basic") {
+            // User inputs the question     
+            inquirer.prompt([{
+                type: "input",
+                message: "What is the question?",
+                validate: function (input) {
+                    if (input === '') {
+                        console.log('Error: You must type something!');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                name: "front"
+            }, {
+                // User inputs the answer
+                type: "input",
+                message: "What is the answer?",
+                validate: function (input) {
+                    if (input === '') {
+                        console.log('Error: You must type something!');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                name: "back"
+            }]).then(function (flashcard) {
+                // ... then constructor function in basic-card.js appends data to log.txt
+                BasicFlashcard(flashcard.front, flashcard.back);
+                startPrompt();
+            });
+            // If user selects Cloze then a cloze cards is created in this two-step process
+        } else if (flashcard.cardType === "Cloze") {
+            inquirer.prompt([{
+                // User inputs the text with "..."
+                type: "input",
+                message: "What is the partial text? (type '---' to indicate deleted portion)",
+                // If user forget to add "..." then an error message is prompted
+                validate: function (input) {
+                    if (input === '' ) {
+                        console.log('Error: You must type something!');
+                        return false;
+                    } else if (input.indexOf(identifier) === -1){
+                        console.log("\n" + " *** ERROR: YOU MUST INCLUDE '---' IN TEXT");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                name: "text"
+            }, {
+                // If user fills out first step appropriately, then user is ashed to input answer (missing bit)
+                type: "input",
+                message: "What is the deleted portion?",
+                validate: function (input) {
+                    if (input === '') {
+                        console.log('Error: You must type something!');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                name: "cloze"
+            }]).then(function (flashcard) {
+                // ... then constructor function in cloze-card.js appends data to log.txt
+                ClozeFlashcard(flashcard.text, flashcard.cloze);
+                startPrompt();
+            });
+        }
+    });
+    // If user selects Read, then each card is displayed one at a time
+}
 // This function displays the flashcards... 
 function readCards(array, index) {
     // The 'front' or 'text' part of the card is split from 'back' or 'cloze' part
