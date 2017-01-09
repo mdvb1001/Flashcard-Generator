@@ -81,10 +81,10 @@ function createCard() {
                 message: "What is the partial text? (type '---' to indicate deleted portion)",
                 // If user forget to add "..." then an error message is prompted
                 validate: function (input) {
-                    if (input === '' ) {
+                    if (input === '') {
                         console.log('Error: You must type something!');
                         return false;
-                    } else if (input.indexOf(identifier) === -1){
+                    } else if (input.indexOf(identifier) === -1) {
                         console.log("\n" + " *** ERROR: YOU MUST INCLUDE '---' IN TEXT");
                         return false;
                     } else {
@@ -116,39 +116,50 @@ function createCard() {
 }
 // This function displays the flashcards... 
 function readCards(array, index) {
-    // The 'front' or 'text' part of the card is split from 'back' or 'cloze' part
-    var thisTrivia = array[index].split(",");
-    // Here the 'front' or 'text' portion of the card is displayed
-    inquirer.prompt([{
-        type: "input",
-        message: thisTrivia[0],
-        name: "question"
-    }]).then(function (answer) {
-        // If the input by user matched the 'back' or 'cloze'...
-        if (answer.question === thisTrivia[1]) {
-            // This message appears
-            console.log("Good Work!");
-            readCards(array, index + 1);
-            // If the input does not match... 
-        } else {
-            // This message appears and... 
-            console.log("This is incorrect!");
-            // User is prompted to confirm whether or not the answer should be revealed
-            inquirer.prompt([{
-                type: "confirm",
-                message: "would you like to see the answer?",
-                name: "fullAnswer",
-                default: true
-            }]).then(function (see) {
-                // then... here the answer is shown and the next card is displayed
-                if (see.fullAnswer === true) {
-                    console.log(thisTrivia[1]);
-                    readCards(array, index + 1);
-                    // ... or here, the next card is shown only  
-                } else {
-                    readCards(array, index + 1);
-                }
-            });
-        }
-    });
+    if (index === array.length) {
+        startPrompt();
+    } else {
+        // The 'front' or 'text' part of the card is split from 'back' or 'cloze' part
+        var thisTrivia = array[index].split(",");
+        // Here the 'front' or 'text' portion of the card is displayed
+        inquirer.prompt([{
+            type: "input",
+            message: thisTrivia[0],
+            // validate: function (thisTrivia) {
+            //     if (thisTrivia[0] === ''){ 
+            //     return startPrompt();}
+            // },
+            name: "question"
+        }]).then(function (answer) {
+            // If the input by user matched the 'back' or 'cloze'...
+            if (answer.question === thisTrivia[1]) {
+                // This message appears
+                console.log("Good Work!");
+                readCards(array, index + 1);
+                // If the input does not match... 
+            } else {
+                // This message appears and... 
+                console.log("This is incorrect!");
+                // User is prompted to confirm whether or not the answer should be revealed
+                inquirer.prompt([{
+                    type: "confirm",
+                    message: "would you like to see the answer?",
+                    name: "fullAnswer",
+                    default: true
+                }]).then(function (see) {
+                    // then... here the answer is shown and the next card is displayed
+                    if (see.fullAnswer === true) {
+                        console.log(thisTrivia[1]);
+                        readCards(array, index + 1);
+                        // ... or here, the next card is shown only  
+                    } else {
+                        readCards(array, index + 1);
+                    }
+                    // if (see.fullAnswer === '') {
+                    //     startPrompt();
+                    // }
+                });
+            }
+        });
+    }
 }
