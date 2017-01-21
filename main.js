@@ -26,7 +26,7 @@ function startPrompt() {
             fs.readFile("log.txt", "utf8", function (error, data) {
                 var dataLine = data.split("\n");
                 var count = 0;
-                readCards(dataLine, count);
+                return readCards(dataLine, count);
             });
         }
     });
@@ -116,19 +116,13 @@ function createCard() {
 }
 // This function displays the flashcards... 
 function readCards(array, index) {
-    if (index === array.length) {
-        startPrompt();
-    } else {
+    if (index < array.length) {
         // The 'front' or 'text' part of the card is split from 'back' or 'cloze' part
         var thisTrivia = array[index].split(",");
         // Here the 'front' or 'text' portion of the card is displayed
         inquirer.prompt([{
             type: "input",
             message: thisTrivia[0],
-            // validate: function (thisTrivia) {
-            //     if (thisTrivia[0] === ''){ 
-            //     return startPrompt();}
-            // },
             name: "question"
         }]).then(function (answer) {
             // If the input by user matched the 'back' or 'cloze'...
@@ -141,7 +135,7 @@ function readCards(array, index) {
                 // This message appears and... 
                 console.log("This is incorrect!");
                 // User is prompted to confirm whether or not the answer should be revealed
-                inquirer.prompt([{
+                return inquirer.prompt([{
                     type: "confirm",
                     message: "would you like to see the answer?",
                     name: "fullAnswer",
@@ -150,16 +144,15 @@ function readCards(array, index) {
                     // then... here the answer is shown and the next card is displayed
                     if (see.fullAnswer === true) {
                         console.log(thisTrivia[1]);
-                        readCards(array, index + 1);
+                        return readCards(array, index + 1);
                         // ... or here, the next card is shown only  
                     } else {
-                        readCards(array, index + 1);
+                        return readCards(array, index + 1); 
                     }
-                    // if (see.fullAnswer === '') {
-                    //     startPrompt();
-                    // }
                 });
             }
         });
+    } else {
+        return;
     }
-}
+ }
