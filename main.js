@@ -147,12 +147,13 @@ function readCards(array, index) {
                         return readCards(array, index + 1);
                         // ... or here, the next card is shown only  
                     } else {
+                        console.log(index + 1);
                         return readCards(array, index + 1); 
                     }
                 });
             }
         });
     } else {
-        return;
+        startPrompt();
     }
  }
